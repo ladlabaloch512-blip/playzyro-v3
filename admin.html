@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Panel - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20g">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20h">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20g"></script>
+<script src="assets/js/app.js?v=2026-11-20h"></script>
 </head><body>
 
 <div class="admin-shell">
@@ -28,6 +28,7 @@
 <div class="searchbox"><input id="a-search" type="search" placeholder="Search users..."></div>
 <div class="countbox"><div class="num" id="a-usercount">0</div><div class="lbl">Total Users</div></div>
 <div class="countbox"><div class="num" id="a-squadcount">0</div><div class="lbl">Registered Squads</div></div>
+<button class="iconbtn" type="button" aria-label="Notifications"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></button>
 <span class="userchip" data-user-chip></span>
 </div>
 <div class="admin-grid">
@@ -46,7 +47,7 @@
 <form class="admin-form" id="as-form">
 <div class="field"><label for="as-tournament">Select a Tournament</label><select id="as-tournament"></select></div>
 <div class="field"><label>Squads</label><div class="assign-list" id="as-squads"></div></div>
-<div id="as-msg"></div><button class="btn" type="submit">Assign Selected Squads</button></form>
+<div id="as-msg"></div><button class="btn dark" type="submit">Assign Selected Squads</button></form>
 <h3 style="margin-top:18px">Current Assignments</h3><ul id="as-list" style="margin:0;padding-left:18px"></ul>
 <div class="art-team" id="assign-strip" style="min-height:64px;margin-top:14px"><span class="art-tag">Team Photo</span></div></section>
 <section class="admin-card" id="events"><h2>Upcoming Events Manager</h2>
@@ -87,13 +88,16 @@ else{content.style.display='';
     var isCap=PZ.db.squads.some(function(s){return s.captainId===x.id;});
     var role=x.role==='admin'?'Admin':(isCap?'Captain':'Member');
     var st=x.status==='Suspended'?'<span class="status">Suspended</span>':'<span class="status open">Active</span>';
-    return '<tr><td>'+PZ.esc(x.username)+'</td><td>Email Hidden</td><td>'+role+'</td><td>'+st+'</td><td><button class="btn small" type="button" data-manage="'+x.id+'">Manage</button></td></tr>';}).join('')||'<tr><td colspan="5">No users found.</td></tr>';
+    return '<tr><td>'+PZ.esc(x.username)+'</td><td>Email Hidden</td><td>'+role+'</td><td>'+st+'</td><td><button class="iconbtn" type="button" data-manage="'+x.id+'" aria-label="Edit user"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button> <button class="btn small outline" type="button" data-manage="'+x.id+'">Moderate</button></td></tr>';}).join('')||'<tr><td colspan="5">No users found.</td></tr>';
   document.querySelectorAll('[data-manage]').forEach(function(b){b.addEventListener('click',function(){var x=PZ.db.users.find(function(u){return u.id===b.getAttribute('data-manage');});if(!x)return;
     x.status=(x.status==='Suspended')?'Active':'Suspended';PZ.save();render();PZ.toast(x.username+' is now '+x.status+'.');});});
-  document.getElementById('a-squads').innerHTML=PZ.db.squads.map(function(s){var c=PZ.user(s.captainId);
-    return '<tr><td>'+PZ.esc(s.name)+'</td><td>'+PZ.esc(c?c.username:'-')+'</td><td>'+s.memberIds.length+'/5</td><td><span class="status open">Active</span></td><td><span class="mini-frame">Team Photo</span></td></tr>';}).join('')||'<tr><td colspan="5">No squads yet.</td></tr>';
+  document.getElementById('a-squads').innerHTML=PZ.db.squads.map(function(s){var c=PZ.user(s.captainId);var sst=(s.status==='Suspended')?'<span class="status">Suspended</span>':'<span class="status open">Active</span>';
+    return '<tr><td>'+PZ.esc(s.name)+'</td><td>'+PZ.esc(c?c.username:'-')+'</td><td>'+s.memberIds.length+'/5</td><td>'+sst+'</td><td><span class="mini-frame">Team Photo</span> <button class="btn small outline" type="button" data-sqmod="'+s.id+'">Moderate</button></td></tr>';}).join('')||'<tr><td colspan="5">No squads yet.</td></tr>';
+  document.querySelectorAll('[data-sqmod]').forEach(function(b){b.addEventListener('click',function(){var s=PZ.db.squads.find(function(x){return x.id===b.getAttribute('data-sqmod');});if(!s)return;s.status=(s.status==='Suspended')?'Active':'Suspended';PZ.save();render();PZ.toast(s.name+' is now '+s.status+'.');});});
   document.getElementById('a-tournaments').innerHTML=PZ.db.tournaments.map(function(t){
-    return '<div class="tcard2"><h3>'+PZ.esc(t.name)+'</h3><div>Date: '+PZ.esc(t.dateText)+'</div><div>Status: '+PZ.esc(t.status)+'</div><div class="art-poster"><span class="art-tag">Tournament Poster</span></div><button class="btn small" type="button" data-edit="'+t.id+'">Edit</button></div>';}).join('')||'<p>No tournaments yet.</p>';
+    return '<div class="tcard2"><h3>'+PZ.esc(t.name)+'</h3><div>Date: '+PZ.esc(t.dateText)+'</div><div>Status: '+PZ.esc(t.status)+'</div><div class="art-poster"><span class="art-tag">Tournament Poster</span></div><div class="tlinks"><button class="tlink" type="button" data-edit="'+t.id+'">Edit Rounds</button><button class="tlink" type="button" data-postpone="'+t.id+'">Postpone</button><button class="tlink" type="button" data-brackets="'+t.id+'">View Brackets</button></div><div class="br-list" id="br-'+t.id+'" style="display:none"></div></div>';}).join('')||'<p>No tournaments yet.</p>';
+  document.querySelectorAll('[data-postpone]').forEach(function(b){b.addEventListener('click',function(){var t=PZ.db.tournaments.find(function(x){return x.id===b.getAttribute('data-postpone');});if(!t)return;t.status='Postponed';PZ.save();render();PZ.toast(t.name+' postponed.');});});
+  document.querySelectorAll('[data-brackets]').forEach(function(b){b.addEventListener('click',function(){var box=document.getElementById('br-'+b.getAttribute('data-brackets'));if(!box)return;if(box.style.display!=='none'){box.style.display='none';return;}var list=PZ.db.assignments.filter(function(a){return a.tournamentId===b.getAttribute('data-brackets');}).map(function(a){var s=PZ.db.squads.find(function(x){return x.id===a.squadId;});return '<li>'+PZ.esc(s?s.name:'-')+'</li>';}).join('');box.innerHTML='<b>Assigned squads:</b>'+(list?'<ul style="margin:4px 0 0;padding-left:18px">'+list+'</ul>':'<div>No squads assigned yet.</div>');box.style.display='';});});
   document.querySelectorAll('[data-edit]').forEach(function(b){b.addEventListener('click',function(){var t=PZ.db.tournaments.find(function(x){return x.id===b.getAttribute('data-edit');});if(!t)return;
     document.getElementById('tf-id').value=t.id;document.getElementById('tf-name').value=t.name;document.getElementById('tf-date').value=t.dateText;document.getElementById('tf-mode').value=t.mode||'Squad';document.getElementById('tf-status').value=t.status;document.getElementById('tf-title').textContent='Edit Tournament';document.getElementById('tf-form').scrollIntoView();});});
   var opts=PZ.db.tournaments.map(function(t){return '<option value="'+t.id+'">'+PZ.esc(t.name)+'</option>';}).join('');
@@ -126,5 +130,8 @@ else{content.style.display='';
   PZ.publishRoom(document.getElementById('rf-tournament').value,document.getElementById('rf-id').value.trim(),document.getElementById('rf-pass').value.trim());
   e.target.reset();render();PZ.toast('Room published to assigned squads.');});
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){var chip=document.querySelector('[data-user-chip]');if(!chip||!chip.querySelector('[data-logout]'))return;var u=PZ.session();if(!u)return;var name=u.username;chip.innerHTML='<span class="pz-avatar">'+PZ.esc(name.charAt(0).toUpperCase())+'<span class="dot"></span></span> '+PZ.esc(name)+' &nbsp;<a href="#" id="a-logout" style="color:inherit;text-decoration:underline">Log out</a>';document.getElementById('a-logout').addEventListener('click',function(e){e.preventDefault();PZ.logout();});});
 </script>
 </body></html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User Dashboard - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20g">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20h">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20g"></script>
+<script src="assets/js/app.js?v=2026-11-20h"></script>
 </head><body>
 <header class="site-header dark"><div class="header-in"><a class="logo" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
@@ -12,17 +12,18 @@
 
 <section class="dash-band"><div class="dash-band-in">
 <h1>User Dashboard <span>// Welcome back, <span id="d-user">Player</span></span></h1>
+<div class="roombox"><div class="rb-head">Room ID &amp; Password</div><div class="rb-body" id="d-room"></div></div>
 </div></section>
 <div class="dash-grid">
 <div><h2>My Squad</h2><div class="squadcard" id="d-squad"></div>
+</div>
+<div><h2>My Tournaments</h2>
+<div class="tablewrap stack-table"><table style="min-width:520px"><thead><tr><th>Tournament</th><th>Stage</th><th>Date &amp; Time</th><th>Status</th><th>Action</th></tr></thead><tbody id="d-mine"></tbody></table></div>
+</div>
 <div class="winners-strip">
 <div class="ws-bar">Winners of the Week</div>
 <div class="ws-body"><div class="art-photo"><span class="art-tag">Winner Photo</span></div><div class="cap"><span class="wl-label">Winner:</span> To be confirmed</div></div></div>
-</div>
-<div><h2>My Tournaments</h2>
-<div class="tablewrap stack-table"><table style="min-width:520px"><thead><tr><th>Tournament</th><th>Date &amp; Time</th><th>Status</th><th>Action</th></tr></thead><tbody id="d-mine"></tbody></table></div>
-</div>
-<div class="side-col"><div class="roombox"><div class="rb-head">Room ID &amp; Password</div><div class="rb-body" id="d-room"></div></div><div class="art-poster tall"><span class="art-tag">Tournament Poster</span></div>
+<div class="side-col"><div class="art-poster tall"><span class="art-tag">Tournament Poster</span></div>
 <h2 style="margin-top:20px">Upcoming Events</h2><ul class="eventlist" id="d-events"></ul></div>
 </div>
 <footer class="site-footer"><div class="footer-in">
@@ -53,15 +54,18 @@ if(u){
  var mine=PZ.myTournaments(u);
  document.getElementById('d-mine').innerHTML = mine.length ? mine.map(function(t){
    var st=PZ.isAssigned(s?s.id:'',t.id)?'Assigned':(PZ.db.applications.some(function(a){return a.squadId===(s?s.id:'')&&a.tournamentId===t.id;})?'Applied':'Registered');
-   return '<tr><td data-label="Tournament">'+PZ.esc(t.name)+'</td><td data-label="Date &amp; Time">'+PZ.esc(t.dateText)+(t.timeText?' , '+PZ.esc(t.timeText):'')+'</td><td data-label="Status">'+st+'</td><td data-label="Action"><a class="btn small" href="tournament.html?id='+t.id+'">Details</a></td></tr>';}).join('')
-   : '<tr><td colspan="4">No tournaments yet. Apply from the <a href="tournaments.html">Tournaments</a> page with your squad.</td></tr>';
+   return '<tr><td data-label="Tournament">'+PZ.esc(t.name)+'</td><td data-label="Stage">To be confirmed</td><td data-label="Date &amp; Time">'+PZ.esc(t.dateText)+(t.timeText?' , '+PZ.esc(t.timeText):'')+'</td><td data-label="Status">'+st+'</td><td data-label="Action"><a class="btn small" href="tournament.html?id='+t.id+'">Details</a></td></tr>';}).join('')
+   : '<tr><td colspan="5">No tournaments yet. Apply from the <a href="tournaments.html">Tournaments</a> page with your squad.</td></tr>';
  var room=document.getElementById('d-room');
  if(!mine.length){room.innerHTML='Reveals at match time.<br>No tournament assigned yet.';}
  else{room.innerHTML=mine.map(function(t){var r=PZ.roomFor(u,t.id);
-   return r?('<div style="margin-bottom:10px"><div>'+PZ.esc(t.name)+'</div><span class="cred">Room ID: '+PZ.esc(r.roomId)+'</span><br><span class="cred">Password: '+PZ.esc(r.password)+'</span></div>')
+   return r?('<div style="margin-bottom:10px"><div>'+PZ.esc(t.name)+'</div><span class="cred">Room ID: '+PZ.esc(r.roomId)+'</span><br><span class="cred">Password: '+PZ.esc(r.password)+'</span><br><button class="btn small" type="button" style="margin-top:8px">Join Room</button></div>')
            :('<div style="margin-bottom:10px"><div>'+PZ.esc(t.name)+'</div>Reveals at match time</div>');}).join('');}
  document.querySelector('.roombox').classList.toggle('live', mine.some(function(t){return !!PZ.roomFor(u,t.id);}));
  document.getElementById('d-events').innerHTML=PZ.db.events.map(function(e){return '<li><b>'+PZ.esc(e.title)+'</b><br>'+PZ.esc(e.dateText)+'</li>';}).join('')||'<li>No upcoming events yet.</li>';
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){var chip=document.querySelector('[data-user-chip]');if(!chip||!chip.querySelector('[data-logout]'))return;var name=document.getElementById('d-user').textContent;chip.innerHTML='<span class="pz-avatar">'+PZ.esc(name.charAt(0).toUpperCase())+'<span class="dot"></span></span> '+PZ.esc(name)+' &nbsp;<a href="#" id="d-logout" style="color:inherit;text-decoration:underline">Log out</a>';document.getElementById('d-logout').addEventListener('click',function(e){e.preventDefault();PZ.logout();});});
 </script>
 </body></html>

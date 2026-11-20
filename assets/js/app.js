@@ -118,7 +118,7 @@ window.PZ_VERSION = '2026-11-20c';
       var u = PZ.session();
       document.querySelectorAll('[data-user-chip]').forEach(function (el) {
         if (u) { el.innerHTML = PZ.esc(u.username) + ' &nbsp;<a href="#" data-logout style="color:inherit;text-decoration:underline">Log out</a>'; }
-        else { el.innerHTML = '<a href="auth.html" style="color:inherit">Log in / Sign up</a>'; }
+        else { el.innerHTML = ''; }
       });
       document.querySelectorAll('[data-logout]').forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); PZ.logout(); }); });
     }

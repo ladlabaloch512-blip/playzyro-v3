@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Signup and Login - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20g">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20h">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20g"></script>
+<script src="assets/js/app.js?v=2026-11-20h"></script>
 </head><body>
 <header class="site-header dark"><div class="header-in"><a class="logo" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
@@ -12,11 +12,10 @@
 
 <div class="wrap">
 <div class="auth-grid">
-<div class="auth-deco">
-<div class="panel"><h2>Community Highlights</h2><div class="art-poster" style="min-height:170px"><span class="art-tag">Tournament Poster</span></div>
+<div class="panel auth-high"><h2>Community Highlights</h2><div class="art-poster" style="min-height:170px"><span class="art-tag">Tournament Poster</span></div>
 <div class="art-poster" style="min-height:64px"><span class="art-tag">Upcoming Events Poster</span></div></div>
-<div class="panel" style="margin-top:22px"><h2>Latest Champions</h2><div class="art-photo"><span class="art-tag">Winner Photo</span></div><div class="art-team"><span class="art-tag">Team Photo</span></div><div class="art-poster" style="min-height:56px"><span class="art-tag">Tournament Poster</span></div></div>
-</div>
+<div class="panel auth-champ"><h2>Latest Champions</h2><div class="art-photo"><span class="art-tag">Winner Photo</span></div><div class="art-team"><span class="art-tag">Team Photo</span></div><div class="art-poster" style="min-height:56px"><span class="art-tag">Tournament Poster</span></div></div>
+<div class="panel auth-sched"><h2>Schedule</h2><div class="tablewrap"><table><thead><tr><th>Event</th><th>Date</th><th>Time</th><th>Slots</th></tr></thead><tbody id="auth-sched-body"></tbody></table></div></div>
 <div class="auth-formcol">
 <div class="auth-panel"><div class="ap-head">Signup and Login</div><div class="auth-cols">
 <div class="auth-col"><h2>Sign Up</h2><form id="signup-form">
@@ -30,7 +29,7 @@
 <div class="field"><label for="li-who">Username or Email</label><input id="li-who" required autocomplete="username"></div>
 <div class="field"><label for="li-pass">Password</label><input id="li-pass" type="password" required autocomplete="current-password"></div>
 <label class="checkline"><input type="checkbox" id="li-rem"><span>Remember me</span></label>
-<button class="btn" type="submit" style="width:100%">Access Account</button></form>
+<button class="btn dark" type="submit" style="width:100%">Access Account</button></form>
 <div id="auth-msg"></div></div>
 </div></div>
 <div class="demo-box"><b>Demo accounts (preview only):</b> demo_admin / demo1234 and DemoPlayer / demo1234</div>
@@ -59,5 +58,10 @@ document.getElementById('login-form').addEventListener('submit',function(e){e.pr
  var u=PZ.login(document.getElementById('li-who').value.trim(),document.getElementById('li-pass').value);
  if(!u){fail('Login failed. Check your username and password.');return;}
  location.href=(u.role==='admin')?'admin.html':'dashboard.html';});
+</script>
+<script>
+(function(){var b=document.getElementById('auth-sched-body');if(!b)return;
+ b.innerHTML=PZ.db.tournaments.map(function(t){var n=PZ.db.assignments.filter(function(a){return a.tournamentId===t.id;}).length;
+  return '<tr><td>'+PZ.esc(t.name)+'</td><td>'+PZ.esc(t.dateText||'To be confirmed')+'</td><td>'+PZ.esc(t.timeText||'To be confirmed')+'</td><td>'+n+' assigned</td></tr>';}).join('')||'<tr><td colspan="4">No tournaments yet.</td></tr>';})();
 </script>
 </body></html>

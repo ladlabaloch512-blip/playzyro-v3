@@ -3,7 +3,7 @@
   --sand:#ecd9a8; --sand2:#e6cf9a; --cream:#f8efdb; --paper:#fdf7e6;
   --brown:#2e1c10; --brown2:#402818; --orange:#c75b21; --orange2:#e07b24;
   --tan:#d9bd7f; --tan2:#cda961; --line:#a97e3f; --ink:#33220f;
-  --display:Georgia,'Times New Roman',serif;
+  --display:'Oswald','Arial Narrow','Franklin Gothic Medium',Impact,sans-serif;
   --cond:'Arial Narrow','Helvetica Neue',Arial,sans-serif;
   --body:'Segoe UI',Arial,Helvetica,sans-serif;
 }
@@ -477,3 +477,44 @@ body>*{flex-shrink:0}
    Presentation-only override of the chevron treatment; the accordion behaviour is unchanged. */
 .faq-item.pz-open .pz-chev{transform:none}
 .faq-item.pz-open .pz-chev::after{content:"×"}
+
+/* ===== V3 R1 fix round (Chat 2 Screenshot Match R1, 2026-11-20) ===== */
+h1,h2,h3{text-transform:uppercase;letter-spacing:.02em}
+/* Chronicle: 3 full photo boxes + text as its own fourth column (desktop); slide kept where space is tight */
+@media(min-width:901px){
+.strip-flex .strip-row{overflow-x:visible}
+.strip-flex .strip-row>.art-photo,.strip-flex .strip-row>.art-team{flex:1 1 0;min-height:104px}
+.newsstrip::after{display:none}
+}
+@media(max-width:900px){
+.strip-flex .strip-row>.art-photo,.strip-flex .strip-row>.art-team{flex:0 0 260px}
+}
+/* Upcoming cards: poster left (square), text right, button under the text */
+.hcard{flex-direction:row}
+.hcard .art-poster{flex:0 0 118px;min-height:118px}
+.hcard .hcard-body{flex:1;min-width:0}
+/* Auth: design 3-column composition on desktop; the form still leads on mobile (existing rules) */
+@media(min-width:821px){
+.auth-grid{display:grid;grid-template-columns:1fr 1fr 1.15fr;grid-template-areas:"high champ auth" "sched sched auth";gap:26px;max-width:1180px;margin:30px auto 0;align-items:stretch}
+.auth-high{grid-area:high}.auth-champ{grid-area:champ}.auth-sched{grid-area:sched}
+.auth-formcol{grid-area:auth;display:flex;flex-direction:column;margin:0}
+.auth-formcol .auth-panel{flex:1}
+.auth-formcol .demo-box{margin-top:14px}
+.auth-sched .tablewrap{margin-top:10px}
+}
+/* Dashboard: winners strip spans wide under My Tournaments; side rail pinned to row 1 */
+@media(min-width:901px){
+.dash-grid .side-col{grid-column:3;grid-row:1}
+.dash-grid .winners-strip{grid-column:1/3;grid-row:2;margin-top:2px}
+}
+/* Shared identity + admin action furniture */
+.pz-avatar{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-family:var(--cond);font-weight:700;font-size:14px;position:relative;vertical-align:middle}
+.pz-avatar .dot{position:absolute;top:-2px;right:-2px;width:9px;height:9px;border-radius:50%;background:#d43a1f;border:2px solid var(--cream)}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;background:var(--cream);border:2px solid var(--brown);color:var(--brown);border-radius:5px;padding:5px 7px;cursor:pointer;vertical-align:middle}
+.iconbtn:hover{border-color:var(--orange);color:var(--orange)}
+.btn.outline{background:transparent;color:var(--brown);border:2px solid var(--brown)}
+.btn.outline:hover{background:var(--brown);color:var(--sand)}
+.tlinks{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
+.tlink{background:none;border:0;padding:0;cursor:pointer;font-family:var(--cond);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:13px;color:var(--orange);text-decoration:underline}
+.tlink:hover{color:var(--brown)}
+.br-list{margin-top:10px;background:var(--cream);border:1px solid var(--line);padding:10px 12px;font-size:14px;text-align:left}

@@ -382,4 +382,6 @@ h1,.section h2,.pagetitle h1,.content h1,.newsstrip h2,.champ-banner h2{font-fam
 
 /* Animations R1 correction: the Champions strip must actually overflow to slide (S2);
    R2 fitted its cells to the row, so prev/next and auto-advance had nothing to move. */
-.strip-row>.ph,.strip-row>.art-photo,.strip-row>.art-team,.strip-row>.strip-cell{flex:0 0 210px}
+.strip-row>.ph,.strip-row>.art-photo,.strip-row>.art-team,.strip-row>.strip-cell{flex:0 0 300px}
+/* Animations R1 fix: open state for the FAQ answer wrapper (was missing, answers could not expand). */
+.faq-item.pz-open .pz-faq-a{grid-template-rows:1fr}

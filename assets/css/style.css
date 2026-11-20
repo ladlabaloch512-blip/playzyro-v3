@@ -525,3 +525,5 @@ h1,h2,h3{text-transform:uppercase;letter-spacing:.02em}
 .champ-unit .art-photo,.champ-unit .art-team{flex:0 0 108px;height:64px;min-height:64px}
 .champ-row .cap{font-size:16px}
 }
+/* ===== V3 R1-02 remainder (panel ruling, 2026-11-20): condensed poster face on headings - Oswald is loaded in every page head; headings bold ===== */
+h1,h2,h3{font-weight:700}

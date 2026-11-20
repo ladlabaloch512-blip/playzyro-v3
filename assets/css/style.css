@@ -349,3 +349,37 @@ h1,.section h2,.pagetitle h1,.content h1,.newsstrip h2,.champ-banner h2{font-fam
   .champ-unit{flex:1 1 100%}
   .footer-in{gap:16px;padding:22px 16px 10px}
 }
+
+/* ===== PlayZyro Animations R1 (panel-approved S1-S5 + O1-O4, Chat 3) =====
+   Rules: content visible on load, entrance starts from visible, no scroll-reveal,
+   animations are never gated on any motion preference setting. */
+.btn{transition:background-color .16s ease,color .16s ease,border-color .16s ease,transform .12s ease}
+.btn:active{transform:scale(.98)}
+.main-nav a,nav.main a,.drawer-nav a{transition:color .15s ease,background-color .15s ease}
+@keyframes pzHero{from{transform:translateY(10px) scale(.99);opacity:.92}to{transform:translateY(0) scale(1);opacity:1}}
+.hero{animation:pzHero .5s ease-out}
+
+@media (hover:hover) and (pointer:fine){
+  .tcard,.why-card{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+  .tcard:hover,.why-card:hover{transform:translateY(-2px);border-color:#a97e3f;box-shadow:0 10px 22px rgba(46,28,16,.22)}
+}
+.pz-prog{height:3px;background:#d9bd7f;margin-top:10px;overflow:hidden}
+.pz-prog i{display:block;height:100%;width:0;background:#c75b21;transition:width .3s ease}
+.strip-row{scroll-behavior:smooth;scroll-snap-type:x proximity}
+.strip-row>*{scroll-snap-align:start}
+.pz-faq-q{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pz-chev{flex:none;width:26px;height:26px;border:2px solid #a97e3f;border-radius:5px;color:#c75b21;display:inline-flex;align-items:center;justify-content:center;font-family:var(--cond);font-weight:700;transition:transform .3s ease}
+.pz-chev::after{content:"+"}
+.pz-open .pz-chev{transform:rotate(45deg)}
+.pz-faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease-in-out}
+.pz-faq-in{overflow:hidden;min-height:0}
+.pz-msg-in{animation:pzMsg .2s ease-out}
+@keyframes pzMsg{from{opacity:.35;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.pz-swap{animation:pzSwap .16s ease-out}
+@keyframes pzSwap{from{opacity:.45}to{opacity:1}}
+.pz-reveal{animation:pzReveal .5s ease-out}
+@keyframes pzReveal{from{opacity:.55;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
+
+/* Animations R1 correction: the Champions strip must actually overflow to slide (S2);
+   R2 fitted its cells to the row, so prev/next and auto-advance had nothing to move. */
+.strip-row>.ph,.strip-row>.art-photo,.strip-row>.art-team,.strip-row>.strip-cell{flex:0 0 210px}

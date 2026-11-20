@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Panel - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css?v=2026-11-20j">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css?v=2026-11-20k">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20j"></script>
+<script src="assets/js/app.js?v=2026-11-20k"></script>
 </head><body>
 
 <div class="admin-shell">
@@ -28,11 +28,15 @@
 <div class="searchbox"><input id="a-search" type="search" placeholder="Search users..."></div>
 <div class="countbox"><div class="num" id="a-usercount">0</div><div class="lbl">Total Users</div></div>
 <div class="countbox"><div class="num" id="a-squadcount">0</div><div class="lbl">Registered Squads</div></div>
-<button class="iconbtn" type="button" aria-label="Notifications"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></button>
+<span class="bell-wrap"><button class="iconbtn" type="button" id="a-bell" aria-label="Notifications"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></button><span class="bell-note" id="a-bell-note" style="display:none">No notifications</span></span>
 <span class="userchip" data-user-chip></span>
 </div>
 <div class="admin-grid">
-<section class="admin-card" id="users"><h2>Users Manager</h2><p class="scroll-hint">Scroll sideways to see the full table</p><div class="tablewrap" style="border:0"><table><thead><tr><th>User - Username</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-users"></tbody></table></div></section>
+<section class="admin-card" id="users"><h2>Users Manager</h2><p class="scroll-hint">Scroll sideways to see the full table</p><div class="tablewrap" style="border:0"><table><thead><tr><th>User - Username</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-users"></tbody></table></div>
+<form class="admin-form" id="uf-form" style="display:none;margin-top:16px"><h3>Edit User</h3>
+<input type="hidden" id="uf-id">
+<div class="field"><label for="uf-name">Display name</label><input id="uf-name" required></div>
+<div id="uf-msg"></div><button class="btn small" type="submit">Save User</button> <button class="btn small dark" type="button" id="uf-cancel">Cancel</button></form></section>
 <section class="admin-card" id="squads"><h2>Squads Manager</h2><p class="scroll-hint">Scroll sideways to see the full table</p><div class="tablewrap" style="border:0"><table><thead><tr><th>Squad Name</th><th>Leader</th><th>Members</th><th>Status</th><th>Preview</th></tr></thead><tbody id="a-squads"></tbody></table></div></section>
 <section class="admin-card" id="tournaments"><h2>Tournaments Manager</h2>
 <div class="tcards" id="a-tournaments"></div>
@@ -88,9 +92,11 @@ else{content.style.display='';
     var isCap=PZ.db.squads.some(function(s){return s.captainId===x.id;});
     var role=x.role==='admin'?'Admin':(isCap?'Captain':'Member');
     var st=x.status==='Suspended'?'<span class="status">Suspended</span>':'<span class="status open">Active</span>';
-    return '<tr><td>'+PZ.esc(x.username)+'</td><td>Email Hidden</td><td>'+role+'</td><td>'+st+'</td><td><button class="iconbtn" type="button" data-manage="'+x.id+'" aria-label="Edit user"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button> <button class="btn small outline" type="button" data-manage="'+x.id+'">Moderate</button></td></tr>';}).join('')||'<tr><td colspan="5">No users found.</td></tr>';
+    return '<tr><td>'+PZ.esc(x.username)+'</td><td>Email Hidden</td><td>'+role+'</td><td>'+st+'</td><td><button class="iconbtn" type="button" data-edituser="'+x.id+'" aria-label="Edit user"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button> <button class="btn small outline" type="button" data-manage="'+x.id+'">Moderate</button></td></tr>';}).join('')||'<tr><td colspan="5">No users found.</td></tr>';
   document.querySelectorAll('[data-manage]').forEach(function(b){b.addEventListener('click',function(){var x=PZ.db.users.find(function(u){return u.id===b.getAttribute('data-manage');});if(!x)return;
     x.status=(x.status==='Suspended')?'Active':'Suspended';PZ.save();render();PZ.toast(x.username+' is now '+x.status+'.');});});
+  document.querySelectorAll('[data-edituser]').forEach(function(b){b.addEventListener('click',function(){var x=PZ.db.users.find(function(u){return u.id===b.getAttribute('data-edituser');});if(!x)return;
+    document.getElementById('uf-id').value=x.id;document.getElementById('uf-name').value=x.username;document.getElementById('uf-msg').innerHTML='';var f=document.getElementById('uf-form');f.style.display='';f.scrollIntoView();});});
   document.getElementById('a-squads').innerHTML=PZ.db.squads.map(function(s){var c=PZ.user(s.captainId);var sst=(s.status==='Suspended')?'<span class="status">Suspended</span>':'<span class="status open">Active</span>';
     return '<tr><td>'+PZ.esc(s.name)+'</td><td>'+PZ.esc(c?c.username:'-')+'</td><td>'+s.memberIds.length+'/5</td><td>'+sst+'</td><td><span class="mini-frame">Team Photo</span> <button class="btn small outline" type="button" data-sqmod="'+s.id+'">Moderate</button></td></tr>';}).join('')||'<tr><td colspan="5">No squads yet.</td></tr>';
   document.querySelectorAll('[data-sqmod]').forEach(function(b){b.addEventListener('click',function(){var s=PZ.db.squads.find(function(x){return x.id===b.getAttribute('data-sqmod');});if(!s)return;s.status=(s.status==='Suspended')?'Active':'Suspended';PZ.save();render();PZ.toast(s.name+' is now '+s.status+'.');});});
@@ -109,7 +115,17 @@ else{content.style.display='';
   document.getElementById('rf-list').innerHTML=PZ.db.tournaments.map(function(t){var r=PZ.db.rooms[t.id];return '<li>'+PZ.esc(t.name)+': '+(r&&r.published?('Room published (Room ID: '+PZ.esc(r.roomId)+')'):'Room not published - squads see "Reveals at match time"')+'</li>';}).join('');
  }
  render();
+ (function(){var bell=document.getElementById('a-bell'),note=document.getElementById('a-bell-note');if(!bell||!note)return;
+   bell.addEventListener('click',function(e){e.stopPropagation();note.style.display=(note.style.display==='none')?'':'none';});
+   document.addEventListener('click',function(e){if(note.style.display!=='none'&&!note.contains(e.target)){note.style.display='none';}});})();
  document.getElementById('a-search').addEventListener('input',render);
+ document.getElementById('uf-form').addEventListener('submit',function(e){e.preventDefault();
+   var x=PZ.db.users.find(function(u){return u.id===document.getElementById('uf-id').value;});if(!x)return;
+   var name=document.getElementById('uf-name').value.trim();var msg=document.getElementById('uf-msg');
+   if(!name){msg.innerHTML='<p class="msg err">Display name cannot be empty.</p>';return;}
+   if(PZ.db.users.some(function(u){return u.id!==x.id&&u.username.toLowerCase()===name.toLowerCase();})){msg.innerHTML='<p class="msg err">That name is already in use.</p>';return;}
+   x.username=name;PZ.save();document.getElementById('uf-form').style.display='none';render();PZ.toast('User updated: '+name);});
+ document.getElementById('uf-cancel').addEventListener('click',function(){document.getElementById('uf-form').style.display='none';});
  document.getElementById('tf-form').addEventListener('submit',function(e){e.preventDefault();
   var id=document.getElementById('tf-id').value;
   var data={name:document.getElementById('tf-name').value.trim(),dateText:document.getElementById('tf-date').value.trim()||'Date to be confirmed',timeText:'',mode:document.getElementById('tf-mode').value.trim()||'Squad',status:document.getElementById('tf-status').value,slots:''};

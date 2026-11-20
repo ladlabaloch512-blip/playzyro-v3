@@ -527,3 +527,6 @@ h1,h2,h3{text-transform:uppercase;letter-spacing:.02em}
 }
 /* ===== V3 R1-02 remainder (panel ruling, 2026-11-20): condensed poster face on headings - Oswald is loaded in every page head; headings bold ===== */
 h1,h2,h3{font-weight:700}
+/* ===== V3 AI Slop round (Chat 6 R1, panel-ruled): notifications bell note ===== */
+.bell-wrap{position:relative;display:inline-flex}
+.bell-note{position:absolute;top:calc(100% + 8px);right:0;background:var(--paper);border:1px solid var(--line);color:var(--ink);padding:10px 14px;font-size:14px;white-space:nowrap;z-index:60;box-shadow:0 10px 24px rgba(46,28,16,.25)}

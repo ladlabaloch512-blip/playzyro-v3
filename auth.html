@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Signup and Login - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20d">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20g">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20d"></script>
+<script src="assets/js/app.js?v=2026-11-20g"></script>
 </head><body>
-<header class="site-header light"><div class="header-in"><a class="logo" href="index.html" aria-label="PlayZyro home">
+<header class="site-header dark"><div class="header-in"><a class="logo" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
 <span class="word">PLAY<b>ZYRO</b></span></a>
 <nav class="mainnav"><a href="index.html">Home</a><a href="tournaments.html">Tournaments</a><a href="about.html">About</a><a href="dashboard.html" data-nav-dash>Dashboard</a><a href="admin.html" data-nav-admin>Admin Panel</a><span class="userchip" data-user-chip></span><a class="btn joinbtn" href="auth.html">Sign Up / Login</a></nav><button class="burger" type="button" data-burger aria-label="Open menu" aria-expanded="false" aria-controls="site-drawer"><span></span><span></span><span></span></button></div></header><div class="drawer-backdrop" data-drawer-close></div><aside class="drawer" id="site-drawer" aria-hidden="true"><div class="drawer-head"><span class="drawer-title">Menu</span><button class="drawer-x" type="button" data-drawer-close aria-label="Close menu">&times;</button></div><nav class="drawer-nav"><a href="index.html">Home</a><a href="tournaments.html">Tournaments</a><a href="about.html">About</a><a href="dashboard.html" data-nav-dash>Dashboard</a><a href="admin.html" data-nav-admin>Admin Panel</a><span class="userchip" data-user-chip></span><div class="drawer-auth"><a class="btn joinbtn" href="auth.html">Sign Up</a><a class="btn dark joinbtn" href="auth.html">Log In</a></div></nav></aside>
@@ -16,7 +16,6 @@
 <div class="panel"><h2>Community Highlights</h2><div class="art-poster" style="min-height:170px"><span class="art-tag">Tournament Poster</span></div>
 <div class="art-poster" style="min-height:64px"><span class="art-tag">Upcoming Events Poster</span></div></div>
 <div class="panel" style="margin-top:22px"><h2>Latest Champions</h2><div class="art-photo"><span class="art-tag">Winner Photo</span></div><div class="art-team"><span class="art-tag">Team Photo</span></div><div class="art-poster" style="min-height:56px"><span class="art-tag">Tournament Poster</span></div></div>
-<div class="panel" style="margin-top:22px"><h2>Schedule</h2><div class="tablewrap stack-table"><table style="min-width:0"><thead><tr><th>Event</th><th>Date</th><th>Status</th></tr></thead><tbody id="auth-sched"></tbody></table></div></div>
 </div>
 <div class="auth-formcol">
 <div class="auth-panel"><div class="ap-head">Signup and Login</div><div class="auth-cols">
@@ -31,7 +30,7 @@
 <div class="field"><label for="li-who">Username or Email</label><input id="li-who" required autocomplete="username"></div>
 <div class="field"><label for="li-pass">Password</label><input id="li-pass" type="password" required autocomplete="current-password"></div>
 <label class="checkline"><input type="checkbox" id="li-rem"><span>Remember me</span></label>
-<button class="btn dark" type="submit" style="width:100%">Access Account</button></form>
+<button class="btn" type="submit" style="width:100%">Access Account</button></form>
 <div id="auth-msg"></div></div>
 </div></div>
 <div class="demo-box"><b>Demo accounts (preview only):</b> demo_admin / demo1234 and DemoPlayer / demo1234</div>
@@ -48,9 +47,6 @@
 (function(){var u=PZ.session();document.querySelectorAll('[data-nav-dash]').forEach(function(e){e.style.display=u?'':'none';});document.querySelectorAll('[data-nav-admin]').forEach(function(e){e.style.display=(u&&u.role==='admin')?'':'none';});document.querySelectorAll('.joinbtn').forEach(function(e){e.style.display=u?'none':'';});})();
 </script>
 <script>
-var rows=PZ.db.tournaments.map(function(t){return '<tr><td data-label="Event">'+PZ.esc(t.name)+'</td><td data-label="Date">'+PZ.esc(t.dateText)+'</td><td data-label="Status">'+PZ.esc(t.status)+'</td></tr>';});
-PZ.db.events.forEach(function(e){rows.push('<tr><td data-label="Event">'+PZ.esc(e.title)+'</td><td data-label="Date">'+PZ.esc(e.dateText)+'</td><td data-label="Status">Upcoming</td></tr>');});
-document.getElementById('auth-sched').innerHTML=rows.join('')||'<tr><td colspan="3">No schedule entries yet.</td></tr>';
 var msg=document.getElementById('auth-msg');
 function fail(m){msg.innerHTML='<div class="msg err">'+PZ.esc(m)+'</div>';}
 document.getElementById('signup-form').addEventListener('submit',function(e){e.preventDefault();

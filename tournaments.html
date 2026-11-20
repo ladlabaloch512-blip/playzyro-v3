@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tournaments and Schedule - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20d">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20g">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20d"></script>
+<script src="assets/js/app.js?v=2026-11-20g"></script>
 </head><body>
 <header class="site-header dark"><div class="header-in"><a class="logo" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
@@ -18,9 +18,9 @@
 <div class="hcards" id="tour-cards" style="margin-left:0"></div>
 <div class="sched" id="schedule" style="margin:38px 0 0"><h2>Large Schedule Table</h2>
 <div class="tablewrap stack-table" style="margin-top:12px"><table><thead><tr><th>Date &amp; Time</th><th>Tournament / Event</th><th>Format</th><th>Slots Filled</th><th>Status / Action</th></tr></thead><tbody id="sched-rows"></tbody></table></div></div>
-<div class="squad-strip"><h2>How Squads Work</h2><div class="ss-row"><div class="ss-item"><div class="num">1</div><p><b>The captain creates a squad</b> and becomes member 1.</p></div><div class="ss-item"><div class="num">2</div><p><b>Share the join code</b> with your players so they can join the squad.</p></div><div class="ss-item"><div class="num">3</div><p><b>4 to 5 players</b> make a full squad. Each player has one active squad.</p></div><div class="ss-item"><div class="num">4</div><p><b>Apply together</b> from the tournament page once your squad has at least 4 members.</p></div></div></div>
+<div class="r2-block"><h2 style="text-transform:uppercase">How Squads Work</h2><div class="steps" style="grid-template-columns:repeat(4,1fr)"><div class="step"><div class="num">1</div><h3>Create</h3><p><b>The captain creates a squad</b> and becomes member 1.</p></div><div class="step"><div class="num">2</div><h3>Share the Code</h3><p><b>Share the join code</b> with your players so they can join the squad.</p></div><div class="step"><div class="num">3</div><h3>Fill the Squad</h3><p><b>4 to 5 players</b> make a full squad. Each player has one active squad.</p></div><div class="step"><div class="num">4</div><h3>Apply Together</h3><p><b>Apply together</b> from the tournament page once your squad has at least 4 members.</p></div></div></div>
 </div>
-<section class="cta-band"><div class="wrap"><h2>Ready to Play?</h2><p>Create your account, build your squad, and apply for the next tournament.</p><div class="cta-row"><a class="btn" href="auth.html">Sign Up</a><a class="btn ghost-light" href="tournaments.html">View Tournaments</a></div></div></section>
+<section class="cta-band cta-slim"><div class="wrap"><h2>Ready to Play?</h2><p>Create your account, build your squad, and apply for the next tournament.</p><div class="cta-row"><a class="btn" href="auth.html">Sign Up</a><a class="btn ghost-light" href="tournaments.html">View Tournaments</a></div></div></section>
 <footer class="site-footer"><div class="footer-in">
 <div><a class="logo" style="margin-bottom:10px" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
@@ -34,7 +34,7 @@
 </script>
 <script>
 document.getElementById('tour-cards').innerHTML = PZ.db.tournaments.map(function(t){
- var b = t.status==='Registration Open' ? '<a class="btn" href="tournament.html?id='+t.id+'">Register</a>' : '<a class="btn dark" href="tournament.html?id='+t.id+'">Upcoming</a>';
+ var b = t.status==='Registration Open' ? '<a class="btn" href="tournament.html?id='+t.id+'">Register</a>' : '<a class="btn ghost" style="opacity:.8" href="tournament.html?id='+t.id+'">Upcoming</a>';
  return '<article class="hcard"><div class="art-poster"><span class="art-tag">Tournament Poster</span></div><div class="hcard-body"><h3>'+PZ.esc(t.name)+'</h3><div class="meta">Date: '+PZ.esc(t.dateText)+'<br>Mode: '+PZ.esc(t.mode||'Squad')+'</div>'+b+'</div></article>';}).join('');
 var rows = PZ.db.tournaments.map(function(t,i){return '<tr'+(i%2?' class="alt"':'')+'><td data-label="Date &amp; Time">'+PZ.esc(t.dateText)+(t.timeText?' | '+PZ.esc(t.timeText):'')+'</td><td data-label="Tournament / Event">'+PZ.esc(t.name)+'</td><td data-label="Format">'+PZ.esc(t.mode||'Squad')+'</td><td data-label="Slots Filled">'+(t.slots?PZ.esc(t.slots):'-')+'</td><td data-label="Status / Action"><a class="btn small" href="tournament.html?id='+t.id+'">View Details</a></td></tr>';});
 PZ.db.events.forEach(function(e,i){rows.push('<tr'+((PZ.db.tournaments.length+i)%2?' class="alt"':'')+'><td data-label="Date &amp; Time">'+PZ.esc(e.dateText)+'</td><td data-label="Tournament / Event">'+PZ.esc(e.title)+'</td><td data-label="Format">Event</td><td data-label="Slots Filled">-</td><td data-label="Status / Action"><span class="status">Upcoming</span></td></tr>');});

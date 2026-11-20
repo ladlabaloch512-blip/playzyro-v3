@@ -354,6 +354,89 @@ h1,.section h2,.pagetitle h1,.content h1,.newsstrip h2,.champ-banner h2{font-fam
   .footer-in{gap:16px;padding:22px 16px 10px}
 }
 
+/* ===== UI/UX round (Snow-approved analysis, 2026-11-20) ===== */
+/* V3-25: footer anchors to the viewport bottom on short pages */
+body{display:flex;flex-direction:column;min-height:100vh}
+body>*{flex-shrink:0}
+.site-footer{margin-top:auto}
+/* V3-01: hero kicker above the single headline */
+.hero-kicker{position:relative;font-family:var(--cond);font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-size:15px;margin:0 0 10px;padding:0 20px}
+/* V3-02 + V3-03: contour lines stay below the text zone; mesas run edge to edge */
+.hero{padding:52px 0 0}
+.hero h1,.hero p{padding-left:20px;padding-right:20px}
+.hero .cta{padding:0 20px 26px}
+.hero .topo{-webkit-mask-image:linear-gradient(180deg,transparent 0,transparent 52%,#000 70%);mask-image:linear-gradient(180deg,transparent 0,transparent 52%,#000 70%)}
+/* V3-04: chronicle strip - native scrollbar hidden, fade hints at more */
+.strip-row{scrollbar-width:none}
+.strip-row::-webkit-scrollbar{display:none}
+.newsstrip{position:relative}
+.newsstrip::after{content:"";position:absolute;top:0;right:0;bottom:0;width:34px;background:linear-gradient(90deg,rgba(253,247,230,0),var(--paper));pointer-events:none}
+/* V3-05: chronicle detail panel sits outside the scroll track at a fixed share */
+.strip-flex{display:flex;gap:16px;align-items:stretch}
+.strip-flex .strip-row{flex:1;min-width:0}
+.strip-flex .strip-cell{flex:0 0 300px;align-self:center}
+@media(max-width:760px){.strip-flex{flex-direction:column}.strip-flex .strip-cell{flex:none}}
+/* V3-09: slimmer closing band on the tournaments page */
+.cta-band.cta-slim{padding:22px 20px}
+/* V3-10 + V3-36: one standard content width (1180) + one reading width (900) */
+.detail-grid,.detail-extra{max-width:1180px}
+.content.std{max-width:1180px}
+.content.wide{max-width:1180px}
+/* V3-11 + V3-13: details panel distributes its content; breadcrumb back link */
+.panel.detail-panel{display:flex;flex-direction:column}
+.panel.detail-panel .backlink{margin-top:auto;padding-top:16px}
+.panel.detail-panel .backlink a{display:inline-block;font-family:var(--cond);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px;border:2px solid var(--brown);border-radius:5px;padding:7px 14px;color:var(--brown);text-decoration:none}
+.crumb{max-width:1180px;margin:22px auto 0;padding:0 20px;font-family:var(--cond);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px;color:var(--brown2)}
+.crumb a{color:var(--orange)}
+/* V3-12: serif display face for section headings site-wide */
+.panel h2,.dash-grid h2,.admin-card h2,.auth-col h2{font-family:var(--display);font-weight:900;letter-spacing:0}
+/* V3-15 + V3-17: auth page - one centred column, form first, highlights as a slim strip below */
+.auth-grid{display:flex;flex-direction:column;max-width:880px}
+.auth-formcol{order:-1}
+.auth-deco{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.auth-deco .panel{margin-top:0!important}
+.auth-deco .art-poster{min-height:96px!important}
+@media(max-width:640px){.auth-deco{grid-template-columns:1fr}}
+/* V3-18: agreement line wraps cleanly; demo note in cream, credentials in orange */
+.checkline span{flex:1;min-width:0}
+.checkline a{white-space:nowrap}
+.demo-box{color:var(--cream)}
+/* V3-19 + V3-21: room box seated in the right column; calm head until a room is live */
+.dash-grid{grid-template-columns:300px 1fr 300px}
+.side-col .roombox{margin:0 0 20px;min-width:0;max-width:none;width:auto;flex:none}
+.roombox .rb-head{background:var(--brown2);color:var(--orange2)}
+.roombox.live .rb-head{background:var(--orange);color:#fff}
+/* V3-22: team artwork fits inside its frame (height-driven size, centred) */
+.art-team{background-size:auto 76%;background-position:center}
+/* V3-23: squad banner shows five slots - the open slot as a dashed outline figure */
+.art-team.five{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 100'%3E%3Cg fill='%23402818'%3E%3Ccircle cx='25' cy='36' r='13'/%3E%3Cpath d='M3 92 C3 68 13 60 25 60 C37 60 47 68 47 92 Z'/%3E%3Ccircle cx='75' cy='36' r='13'/%3E%3Cpath d='M53 92 C53 68 63 60 75 60 C87 60 97 68 97 92 Z'/%3E%3Ccircle cx='125' cy='36' r='13'/%3E%3Cpath d='M103 92 C103 68 113 60 125 60 C137 60 147 68 147 92 Z'/%3E%3Ccircle cx='175' cy='36' r='13'/%3E%3Cpath d='M153 92 C153 68 163 60 175 60 C187 60 197 68 197 92 Z'/%3E%3C/g%3E%3Cg fill='none' stroke='%23402818' stroke-width='2' stroke-dasharray='5 4'%3E%3Ccircle cx='225' cy='36' r='13'/%3E%3Cpath d='M203 92 C203 68 213 60 225 60 C237 60 247 68 247 92 Z'/%3E%3C/g%3E%3C/svg%3E")}
+/* V3-23: roster rows - name left, role right, divider lines */
+.card .mrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 2px;border-bottom:1px solid var(--tan2)}
+.card .mrow .mrole{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--orange);font-size:13px;white-space:nowrap}
+/* V3-24: squad card bottom padding matches its top */
+#s-body{padding-bottom:12px}
+#s-body p:last-child{margin-bottom:2px}
+/* V3-26 + V3-34: framed form pages + mesa strip under the header */
+.formcard{border-top:8px solid var(--orange)}
+.mesa-strip{display:block;width:100%;height:84px}
+/* V3-27: readable placeholder + code-field styling + hint line */
+.formcard input::placeholder{color:#8a6d3b;opacity:1}
+.code-in{letter-spacing:.14em;text-transform:uppercase;font-family:var(--cond);font-weight:700}
+.hint{font-size:13.5px;color:var(--brown2);margin:6px 0 0}
+/* V3-29: admin cards size to content */
+.admin-grid{align-items:start}
+/* V3-30: events media slots presented as slots with captions */
+.slot-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.slot-row .slot{min-height:130px}
+.slot-cap{font-size:13px;color:var(--brown2);margin:6px 0 0}
+/* V3-31: sidebar closes deliberately with a note at its foot */
+@media(min-width:761px){.admin-side{display:flex;flex-direction:column}.admin-side nav{flex:1}}
+.side-note{font-size:12.5px;color:var(--tan);border-top:1px solid var(--brown2);padding-top:12px;margin:14px 0 0}
+/* V3-32: tournament mini-cards at the admin's standard sizes */
+.tcards .tcard2 h3{font-size:17px}
+.tcards .tcard2 .ph{font-size:12px}
+.tcard2 .btn{padding:8px 16px}
+
 /* ===== PlayZyro Animations R1 (panel-approved S1-S5 + O1-O4, Chat 3) =====
    Rules: content visible on load, entrance starts from visible, no scroll-reveal,
    animations are never gated on any motion preference setting. */
@@ -389,3 +472,8 @@ h1,.section h2,.pagetitle h1,.content h1,.newsstrip h2,.champ-banner h2{font-fam
 .strip-row>.ph,.strip-row>.art-photo,.strip-row>.art-team,.strip-row>.strip-cell{flex:0 0 300px}
 /* Animations R1 fix: open state for the FAQ answer wrapper (was missing, answers could not expand). */
 .faq-item.pz-open .pz-faq-a{grid-template-rows:1fr}
+
+/* UI/UX round (V3-06): FAQ icon keeps one container shape; only the glyph swaps, no rotation.
+   Presentation-only override of the chevron treatment; the accordion behaviour is unchanged. */
+.faq-item.pz-open .pz-chev{transform:none}
+.faq-item.pz-open .pz-chev::after{content:"×"}

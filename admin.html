@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Panel - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20d">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20g">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20d"></script>
+<script src="assets/js/app.js?v=2026-11-20g"></script>
 </head><body>
 
 <div class="admin-shell">
@@ -15,12 +15,12 @@
 <a href="#top" class="active">Dashboard</a>
 <a href="#users">Users Manager</a>
 <a href="#squads">Squads Manager</a>
-<a href="#tournaments">Tournaments Manager</a>
+<a href="#tournaments">Tournaments</a>
 <a href="#assigner">Team Assigner</a>
 <a href="#events">Upcoming Events Manager</a>
 <a href="#room">Room ID &amp; Password</a>
 <a href="index.html">Back to Website</a>
-</nav></aside>
+</nav><p class="side-note">Demo preview - sample data only.</p></aside>
 <main class="admin-main" id="top">
 <div id="admin-guard"></div>
 <div id="admin-content" style="display:none">
@@ -31,7 +31,7 @@
 <span class="userchip" data-user-chip></span>
 </div>
 <div class="admin-grid">
-<section class="admin-card" id="users"><h2>Users Manager</h2><p class="scroll-hint">Scroll sideways to see the full table</p><div class="tablewrap" style="border:0"><table><thead><tr><th>User - Username</th><th>Email</th><th>Role</th><th>Status</th></tr></thead><tbody id="a-users"></tbody></table></div></section>
+<section class="admin-card" id="users"><h2>Users Manager</h2><p class="scroll-hint">Scroll sideways to see the full table</p><div class="tablewrap" style="border:0"><table><thead><tr><th>User - Username</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-users"></tbody></table></div></section>
 <section class="admin-card" id="squads"><h2>Squads Manager</h2><p class="scroll-hint">Scroll sideways to see the full table</p><div class="tablewrap" style="border:0"><table><thead><tr><th>Squad Name</th><th>Leader</th><th>Members</th><th>Status</th><th>Preview</th></tr></thead><tbody id="a-squads"></tbody></table></div></section>
 <section class="admin-card" id="tournaments"><h2>Tournaments Manager</h2>
 <div class="tcards" id="a-tournaments"></div>
@@ -48,14 +48,14 @@
 <div class="field"><label>Squads</label><div class="assign-list" id="as-squads"></div></div>
 <div id="as-msg"></div><button class="btn" type="submit">Assign Selected Squads</button></form>
 <h3 style="margin-top:18px">Current Assignments</h3><ul id="as-list" style="margin:0;padding-left:18px"></ul>
-<div class="art-team" style="min-height:64px;margin-top:14px"><span class="art-tag">Team Photo</span></div></section>
+<div class="art-team" id="assign-strip" style="min-height:64px;margin-top:14px"><span class="art-tag">Team Photo</span></div></section>
 <section class="admin-card" id="events"><h2>Upcoming Events Manager</h2>
 <ul class="timeline" id="a-events"></ul>
 <form class="admin-form" id="ef-form" style="margin-top:14px"><div class="row2">
 <div class="field"><label for="ef-title">Event Title</label><input id="ef-title" required></div>
 <div class="field"><label for="ef-date">Event Date</label><input id="ef-date" placeholder="Date to be confirmed"></div></div>
 <button class="btn small" type="submit">Add Event</button></form>
-<div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap"><div class="art-poster" style="flex:1;min-height:70px"><span class="art-tag">Tournament Poster</span></div><div class="art-photo" style="flex:1;min-height:70px"><span class="art-tag">Winner Photo</span></div></div></section>
+<div class="slot-row"><div><div class="art-poster slot"><span class="art-tag">Tournament Poster</span></div><p class="slot-cap">Tournament poster slot - to be provided by the client.</p></div><div><div class="art-photo slot"><span class="art-tag">Winner Photo</span></div><p class="slot-cap">Winner photo slot - to be provided by the client.</p></div></div></section>
 <section class="admin-card" id="room"><h2>Room ID &amp; Password</h2>
 <p>Publish the room for a tournament. Only squads assigned to that tournament will see it, on their own dashboard, at match time.</p>
 <form class="admin-form" id="rf-form">
@@ -86,7 +86,10 @@ else{content.style.display='';
   document.getElementById('a-users').innerHTML=PZ.db.users.filter(function(x){return x.username.toLowerCase().indexOf(q)>-1;}).map(function(x){
     var isCap=PZ.db.squads.some(function(s){return s.captainId===x.id;});
     var role=x.role==='admin'?'Admin':(isCap?'Captain':'Member');
-    return '<tr><td>'+PZ.esc(x.username)+'</td><td>Email Hidden</td><td>'+role+'</td><td><span class="status open">Active</span></td></tr>';}).join('')||'<tr><td colspan="4">No users found.</td></tr>';
+    var st=x.status==='Suspended'?'<span class="status">Suspended</span>':'<span class="status open">Active</span>';
+    return '<tr><td>'+PZ.esc(x.username)+'</td><td>Email Hidden</td><td>'+role+'</td><td>'+st+'</td><td><button class="btn small" type="button" data-manage="'+x.id+'">Manage</button></td></tr>';}).join('')||'<tr><td colspan="5">No users found.</td></tr>';
+  document.querySelectorAll('[data-manage]').forEach(function(b){b.addEventListener('click',function(){var x=PZ.db.users.find(function(u){return u.id===b.getAttribute('data-manage');});if(!x)return;
+    x.status=(x.status==='Suspended')?'Active':'Suspended';PZ.save();render();PZ.toast(x.username+' is now '+x.status+'.');});});
   document.getElementById('a-squads').innerHTML=PZ.db.squads.map(function(s){var c=PZ.user(s.captainId);
     return '<tr><td>'+PZ.esc(s.name)+'</td><td>'+PZ.esc(c?c.username:'-')+'</td><td>'+s.memberIds.length+'/5</td><td><span class="status open">Active</span></td><td><span class="mini-frame">Team Photo</span></td></tr>';}).join('')||'<tr><td colspan="5">No squads yet.</td></tr>';
   document.getElementById('a-tournaments').innerHTML=PZ.db.tournaments.map(function(t){
@@ -97,6 +100,7 @@ else{content.style.display='';
   document.getElementById('as-tournament').innerHTML=opts;document.getElementById('rf-tournament').innerHTML=opts;
   document.getElementById('as-squads').innerHTML=PZ.db.squads.map(function(s){return '<label><input type="checkbox" name="as-squad" value="'+s.id+'"> '+PZ.esc(s.name)+' ('+s.memberIds.length+'/5)</label>';}).join('')||'<p>No squads yet.</p>';
   document.getElementById('as-list').innerHTML=PZ.db.assignments.map(function(a){var t=PZ.db.tournaments.find(function(x){return x.id===a.tournamentId;});var s=PZ.db.squads.find(function(x){return x.id===a.squadId;});return '<li>'+PZ.esc(s?s.name:'-')+' assigned to '+PZ.esc(t?t.name:'-')+'</li>';}).join('')||'<li>No assignments yet.</li>';
+  var astrip=document.getElementById('assign-strip');if(astrip){astrip.style.display=PZ.db.assignments.length?'':'none';}
   document.getElementById('a-events').innerHTML=PZ.db.events.map(function(e){return '<li><b>'+PZ.esc(e.title)+'</b><br>'+PZ.esc(e.dateText)+'</li>';}).join('')||'<li>No events yet.</li>';
   document.getElementById('rf-list').innerHTML=PZ.db.tournaments.map(function(t){var r=PZ.db.rooms[t.id];return '<li>'+PZ.esc(t.name)+': '+(r&&r.published?('Room published (Room ID: '+PZ.esc(r.roomId)+')'):'Room not published - squads see "Reveals at match time"')+'</li>';}).join('');
  }

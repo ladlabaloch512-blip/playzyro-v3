@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Squad - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-19a">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-20a">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-19a"></script>
+<script src="assets/js/app.js?v=2026-11-20a"></script>
 </head><body>
 <header class="site-header dark"><div class="header-in"><a class="logo" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
 <span class="word">PLAY<b>ZYRO</b></span></a>
-<nav class="mainnav"><a href="index.html">Home</a><a href="tournaments.html">Tournaments</a><a href="about.html">About</a><a href="dashboard.html" class="active" data-nav-dash>Dashboard</a><a href="admin.html" data-nav-admin>Admin Panel</a><span class="userchip" data-user-chip></span><a class="btn joinbtn" href="auth.html">Join Now</a></nav></div></header>
+<nav class="mainnav"><a href="index.html">Home</a><a href="tournaments.html">Tournaments</a><a href="about.html">About</a><a href="dashboard.html" class="active" data-nav-dash>Dashboard</a><a href="admin.html" data-nav-admin>Admin Panel</a><span class="userchip" data-user-chip></span><a class="btn joinbtn" href="auth.html">Join Now</a></nav><button class="burger" type="button" data-burger aria-label="Open menu" aria-expanded="false" aria-controls="site-drawer"><span></span><span></span><span></span></button></div></header><div class="drawer-backdrop" data-drawer-close></div><aside class="drawer" id="site-drawer" aria-hidden="true"><div class="drawer-head"><span class="drawer-title">Menu</span><button class="drawer-x" type="button" data-drawer-close aria-label="Close menu">&times;</button></div><nav class="drawer-nav"><a href="index.html">Home</a><a href="tournaments.html">Tournaments</a><a href="about.html">About</a><a href="dashboard.html" data-nav-dash>Dashboard</a><a href="admin.html" data-nav-admin>Admin Panel</a><span class="userchip" data-user-chip></span><div class="drawer-auth"><a class="btn joinbtn" href="auth.html">Sign Up</a><a class="btn dark joinbtn" href="auth.html">Log In</a></div></nav></aside>
 
 <div class="content"><h1>My Squad</h1><div class="card" id="s-body"></div></div>
 <footer class="site-footer"><div class="footer-in">
 <div><a class="logo" style="margin-bottom:10px" href="index.html" aria-label="PlayZyro home">
 <svg width="42" height="42" viewBox="0 0 48 48" aria-hidden="true"><g fill="#e07b24"><path d="M24 1l3 6 6-3-1 7 7-1-3 6 6 3-6 3 3 6-7-1 1 7-6-3-3 6-3-6-6 3 1-7-7 1 3-6-6-3 6-3-3-6 7 1-1-7 6 3z"/><circle cx="24" cy="24" r="12" fill="#f39c2c"/></g><text x="24" y="31" font-size="17" font-family="Georgia,serif" font-weight="bold" text-anchor="middle" fill="#2e1c10">Z</text></svg>
-<span class="word">PLAY<b>ZYRO</b></span></a><p style="margin:6px 0;max-width:420px">PlayZyro Community - tournaments, schedules, upcoming events and winners for the PlayZyro PUBG community, in one place online.</p><p style="margin:4px 0;color:var(--tan)">playzyro.xyz</p></div>
+<span class="word">PLAY<b>ZYRO</b></span></a><p style="margin:6px 0;max-width:420px">PlayZyro Community - tournaments, schedules, upcoming events and winners for the PlayZyro PUBG community, in one place online.</p><p style="margin:4px 0;color:var(--tan)">playzyro.xyz</p><p class="foot-contact">Contact email: to be provided by the client</p></div>
 <div><h4>Quick Links</h4><a href="index.html">Home</a><a href="tournaments.html">Tournaments</a><a href="about.html">About Us</a><a href="terms.html">Terms and Conditions</a></div>
 <div><h4>Social</h4><p style="margin:4px 0">Social links: to be provided by the client</p></div>
 <p class="demo-note">Demo preview: sample accounts, tournaments and squads labelled Demo or Example are preview data only. Real tournaments, winners, posters and photos are added by the admin / provided by the client.</p>
@@ -25,10 +25,10 @@
 <script>
 var u=PZ.requireAuth();
 if(u){var s=PZ.mySquad(u.id),el=document.getElementById('s-body');
- if(!s){el.innerHTML='<div class="ph">Team Photo Placeholder</div><p>You are not in a squad yet.</p><p><a class="btn" href="squad-create.html">Create Squad</a> <a class="btn dark" href="squad-join.html">Join by Code</a></p>';}
+ if(!s){el.innerHTML='<div class="art-team"><span class="art-tag">Team Photo</span></div><p>You are not in a squad yet.</p><p><a class="btn" href="squad-create.html">Create Squad</a> <a class="btn dark" href="squad-join.html">Join by Code</a></p>';}
  else{var lis=s.memberIds.map(function(id,i){var m=PZ.user(id);return '<li>'+(id===s.captainId?'Captain':'Member '+(i+1))+': '+PZ.esc(m?m.username:'-')+(id===u.id?' (You)':'')+'</li>';}).join('');
-  if(s.memberIds.length===4){lis+='<li>Member 5: [Empty Slot - Invite]</li>';}
-  el.innerHTML='<div class="ph">Team Photo Placeholder</div><h2 style="text-align:left;margin-top:14px">'+PZ.esc(s.name)+'</h2><ul style="list-style:none;padding:0">'+lis+'</ul><div class="jocode"><span>Squad Join Code: '+PZ.esc(s.joinCode)+'</span><button class="btn small" id="copy-code" type="button">Copy Code</button></div><p style="margin-top:14px">Squad size: '+s.memberIds.length+' of 5. A squad needs at least 4 members to apply for a tournament.</p><p><a class="btn" href="tournaments.html">Apply for a Tournament</a></p>';
+  if(s.memberIds.length===4){lis+='<li>Member 5: Open slot - invite a player</li>';}
+  el.innerHTML='<div class="art-team"><span class="art-tag">Team Photo</span></div><h2 style="text-align:left;margin-top:14px">'+PZ.esc(s.name)+'</h2><ul style="list-style:none;padding:0">'+lis+'</ul><div class="jocode"><span>Squad Join Code: '+PZ.esc(s.joinCode)+'</span><button class="btn small" id="copy-code" type="button">Copy Code</button></div><p style="margin-top:14px">Squad size: '+s.memberIds.length+' of 5. A squad needs at least 4 members to apply for a tournament.</p><p><a class="btn" href="tournaments.html">Apply for a Tournament</a></p>';
   document.getElementById('copy-code').addEventListener('click',function(){if(navigator.clipboard){navigator.clipboard.writeText(s.joinCode);}PZ.toast('Join code copied: '+s.joinCode);});}}
 </script>
 </body></html>

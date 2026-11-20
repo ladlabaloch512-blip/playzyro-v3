@@ -3,7 +3,7 @@
    tournaments and room credentials are created through the site's own flows.
    Mirrors the later WordPress tables: users, squads, tournaments, events,
    applications, assignments, rooms. */
-window.PZ_VERSION = '2026-11-19a';
+window.PZ_VERSION = '2026-11-20a';
 (function () {
   var V = window.PZ_VARIANT || 'vx';
   var KEY = 'pz_' + V + '_db_v1';
@@ -123,6 +123,23 @@ window.PZ_VERSION = '2026-11-19a';
       document.querySelectorAll('[data-logout]').forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); PZ.logout(); }); });
     }
   };
+
+  /* R2: mobile drawer wiring (additive; PZ API unchanged) */
+  document.addEventListener('DOMContentLoaded', function () {
+    var drawer = document.getElementById('site-drawer');
+    if (!drawer) return;
+    var backdrop = document.querySelector('.drawer-backdrop');
+    function setOpen(open) {
+      drawer.classList.toggle('open', open);
+      if (backdrop) backdrop.classList.toggle('open', open);
+      drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.querySelectorAll('[data-burger]').forEach(function (b) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    document.querySelectorAll('[data-burger]').forEach(function (b) { b.addEventListener('click', function () { setOpen(true); }); });
+    document.querySelectorAll('[data-drawer-close]').forEach(function (el) { el.addEventListener('click', function () { setOpen(false); }); });
+    drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  });
   window.PZ = PZ;
   document.addEventListener('DOMContentLoaded', function () { PZ.mountUserChip(); });
 })();

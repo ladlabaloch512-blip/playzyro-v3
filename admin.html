@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Panel - PlayZyro</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23e07b24'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Georgia' font-weight='bold' text-anchor='middle' fill='%232e1c10'%3EZ%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css?v=2026-11-20k">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css?v=2026-11-20l">
 <script>window.PZ_VARIANT='v3';</script>
-<script src="assets/js/app.js?v=2026-11-20k"></script>
+<script src="assets/js/app.js?v=2026-11-20l"></script>
 </head><body>
 
 <div class="admin-shell">
@@ -53,14 +53,14 @@
 <div class="field"><label>Squads</label><div class="assign-list" id="as-squads"></div></div>
 <div id="as-msg"></div><button class="btn dark" type="submit">Assign Selected Squads</button></form>
 <h3 style="margin-top:18px">Current Assignments</h3><ul id="as-list" style="margin:0;padding-left:18px"></ul>
-<div class="art-team" id="assign-strip" style="min-height:64px;margin-top:14px"><span class="art-tag">Team Photo</span></div></section>
+<div class="art-team has-art" id="assign-strip" style="min-height:64px;margin-top:14px"><img class="pz-art" src="assets/img/art-poster-b.jpg" alt=""><span class="art-tag">Team Artwork</span></div></section>
 <section class="admin-card" id="events"><h2>Upcoming Events Manager</h2>
 <ul class="timeline" id="a-events"></ul>
 <form class="admin-form" id="ef-form" style="margin-top:14px"><div class="row2">
 <div class="field"><label for="ef-title">Event Title</label><input id="ef-title" required></div>
 <div class="field"><label for="ef-date">Event Date</label><input id="ef-date" placeholder="Date to be confirmed"></div></div>
 <button class="btn small" type="submit">Add Event</button></form>
-<div class="slot-row"><div><div class="art-poster slot"><span class="art-tag">Tournament Poster</span></div><p class="slot-cap">Tournament poster slot - to be provided by the client.</p></div><div><div class="art-photo slot"><span class="art-tag">Winner Photo</span></div><p class="slot-cap">Winner photo slot - to be provided by the client.</p></div></div></section>
+<div class="slot-row"><div><div class="art-poster slot has-art"><img class="pz-art" src="assets/img/art-poster-a.jpg" alt=""><span class="art-tag">Tournament Poster</span></div><p class="slot-cap">Tournament poster slot - to be provided by the client.</p></div><div><div class="art-photo slot has-art"><img class="pz-art" src="assets/img/art-champion.jpg" alt=""><span class="art-tag">Champion Artwork</span></div><p class="slot-cap">Winner photo slot - to be provided by the client.</p></div></div></section>
 <section class="admin-card" id="room"><h2>Room ID &amp; Password</h2>
 <p>Publish the room for a tournament. Only squads assigned to that tournament will see it, on their own dashboard, at match time.</p>
 <form class="admin-form" id="rf-form">
@@ -101,7 +101,7 @@ else{content.style.display='';
     return '<tr><td>'+PZ.esc(s.name)+'</td><td>'+PZ.esc(c?c.username:'-')+'</td><td>'+s.memberIds.length+'/5</td><td>'+sst+'</td><td><span class="mini-frame">Team Photo</span> <button class="btn small outline" type="button" data-sqmod="'+s.id+'">Moderate</button></td></tr>';}).join('')||'<tr><td colspan="5">No squads yet.</td></tr>';
   document.querySelectorAll('[data-sqmod]').forEach(function(b){b.addEventListener('click',function(){var s=PZ.db.squads.find(function(x){return x.id===b.getAttribute('data-sqmod');});if(!s)return;s.status=(s.status==='Suspended')?'Active':'Suspended';PZ.save();render();PZ.toast(s.name+' is now '+s.status+'.');});});
   document.getElementById('a-tournaments').innerHTML=PZ.db.tournaments.map(function(t){
-    return '<div class="tcard2"><h3>'+PZ.esc(t.name)+'</h3><div>Date: '+PZ.esc(t.dateText)+'</div><div>Status: '+PZ.esc(t.status)+'</div><div class="art-poster"><span class="art-tag">Tournament Poster</span></div><div class="tlinks"><button class="tlink" type="button" data-edit="'+t.id+'">Edit Rounds</button><button class="tlink" type="button" data-postpone="'+t.id+'">Postpone</button><button class="tlink" type="button" data-brackets="'+t.id+'">View Brackets</button></div><div class="br-list" id="br-'+t.id+'" style="display:none"></div></div>';}).join('')||'<p>No tournaments yet.</p>';
+    return '<div class="tcard2"><h3>'+PZ.esc(t.name)+'</h3><div>Date: '+PZ.esc(t.dateText)+'</div><div>Status: '+PZ.esc(t.status)+'</div><div class="art-poster has-art"><img class="pz-art" src="assets/img/art-poster-a.jpg" alt=""><span class="art-tag">Tournament Poster</span></div><div class="tlinks"><button class="tlink" type="button" data-edit="'+t.id+'">Edit Rounds</button><button class="tlink" type="button" data-postpone="'+t.id+'">Postpone</button><button class="tlink" type="button" data-brackets="'+t.id+'">View Brackets</button></div><div class="br-list" id="br-'+t.id+'" style="display:none"></div></div>';}).join('')||'<p>No tournaments yet.</p>';
   document.querySelectorAll('[data-postpone]').forEach(function(b){b.addEventListener('click',function(){var t=PZ.db.tournaments.find(function(x){return x.id===b.getAttribute('data-postpone');});if(!t)return;t.status='Postponed';PZ.save();render();PZ.toast(t.name+' postponed.');});});
   document.querySelectorAll('[data-brackets]').forEach(function(b){b.addEventListener('click',function(){var box=document.getElementById('br-'+b.getAttribute('data-brackets'));if(!box)return;if(box.style.display!=='none'){box.style.display='none';return;}var list=PZ.db.assignments.filter(function(a){return a.tournamentId===b.getAttribute('data-brackets');}).map(function(a){var s=PZ.db.squads.find(function(x){return x.id===a.squadId;});return '<li>'+PZ.esc(s?s.name:'-')+'</li>';}).join('');box.innerHTML='<b>Assigned squads:</b>'+(list?'<ul style="margin:4px 0 0;padding-left:18px">'+list+'</ul>':'<div>No squads assigned yet.</div>');box.style.display='';});});
   document.querySelectorAll('[data-edit]').forEach(function(b){b.addEventListener('click',function(){var t=PZ.db.tournaments.find(function(x){return x.id===b.getAttribute('data-edit');});if(!t)return;
